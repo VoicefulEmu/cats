@@ -30,9 +30,19 @@ def choose(paragraphs, select, k):
     ''
     """
     # BEGIN PROBLEM 1
-    "*** YOUR CODE HERE ***"
+    i = 0
+    answer_list = []
+    counter = 0
+    while i <len(paragraphs):
+        if select(paragraphs[i]):
+            answer_list.append(paragraphs[i])
+            i += 1
+        else:
+            i +=1
+    if len(answer_list) > k:
+        return answer_list[k]
+    return ''
     # END PROBLEM 1
-
 
 def about(topic):
     """Return a select function that returns whether
@@ -49,7 +59,7 @@ def about(topic):
     """
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
+
     # END PROBLEM 2
 
 
