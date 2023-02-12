@@ -59,9 +59,22 @@ def about(topic):
     """
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
-
+    def function(input):
+        input_fixed = []
+        x_split_list = split(input)
+        for x in x_split_list:
+            x_punc = remove_punctuation(x)
+            x_lower = lower(x_punc)
+            input_fixed.append(x_lower)
+            # print (input_fixed)
+            # input_fixed + x_split_list
+        for x in topic:
+            if x in input_fixed:
+                return True
+        else:
+            return False
+    return function
     # END PROBLEM 2
-
 
 def accuracy(typed, reference):
     """Return the accuracy (percentage of words typed correctly) of TYPED
