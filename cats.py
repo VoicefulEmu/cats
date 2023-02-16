@@ -101,10 +101,38 @@ def accuracy(typed, reference):
     """
     typed_words = split(typed)
     reference_words = split(reference)
+    counter = 0
     # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
+    # if len(typed_words) != len(reference_words):
+    #     return 0.0
+    for x in range(len(typed_words)):
+        if typed_words[x] == None or reference_words[x] == None:
+            return (counter/len(reference_words))* 100
+        if typed_words[x] == reference_words[x]:
+            counter += 1
+    return (counter/len(reference_words))* 100
+    
+
+    # def helper(typedh, referenceh):
+    #     index = 0
+    #     if typedh == []:
+    #         return 0
+    #     elif len(typedh) != len(referenceh):
+    #         return 0 
+    #     elif len(typedh) == 0 and len(referenceh) == 0:
+    #         return 1
+    #     elif typedh[0] == referenceh[0]:
+    #         return 1 + accuracy(typedh[1:],referenceh[1:])
+    #     else:
+    #         return helper(typedh[1:],referenceh[1:])
+    
+    # final_answer = (helper(typed_words,reference_words))/len(typed)
+    # return final_answer
+
+
     # END PROBLEM 3
 
+# print(accuracy('a  b  c  d','a  d'))
 
 def wpm(typed, elapsed):
     """Return the words-per-minute (WPM) of the TYPED string.
