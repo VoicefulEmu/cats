@@ -103,14 +103,34 @@ def accuracy(typed, reference):
     reference_words = split(reference)
     counter = 0
     # BEGIN PROBLEM 3
-    # if len(typed_words) != len(reference_words):
-    #     return 0.0
-    for x in range(len(typed_words)):
-        if typed_words[x] == None or reference_words[x] == None:
-            return (counter/len(reference_words))* 100
-        if typed_words[x] == reference_words[x]:
-            counter += 1
-    return (counter/len(reference_words))* 100
+    if len(typed_words) == 0 and len(reference_words) == 0:
+         counter = 1
+         return counter/1 *100
+    elif len(typed_words) == 0 and len(reference_words) != 0 or len(typed_words) !=0 and len(reference_words) == 0:
+        counter = 0
+    if len(typed_words) > len(reference_words):
+        for x in range(len(reference_words)):
+            if typed_words[x] == reference_words[x]:
+                counter +=1
+        return counter/len(typed_words) *100
+    else:
+        for x in range(len(typed_words)):
+            if typed_words[x] == reference_words[x]:
+                counter +=1
+    return counter/len(reference_words) * 100
+
+    final_list = []
+
+
+
+
+
+    # for x in range(len(typed_words)):
+    #     if typed_words[x] == None or reference_words[x] == None:
+    #         return (counter/len(reference_words))* 100
+    #     if typed_words[x] == reference_words[x]:
+    #         counter += 1
+    # return (counter/len(reference_words))* 100
     
 
     # def helper(typedh, referenceh):
@@ -132,7 +152,7 @@ def accuracy(typed, reference):
 
     # END PROBLEM 3
 
-# print(accuracy('a  b  c  d','a  d'))
+# print(accuracy('Cute', 'Cute Dog.'))
 
 def wpm(typed, elapsed):
     """Return the words-per-minute (WPM) of the TYPED string.
@@ -148,7 +168,10 @@ def wpm(typed, elapsed):
     """
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    if typed == 0:
+        return 0
+    else:
+        return ((len(typed)/5)/elapsed)*60
     # END PROBLEM 4
 
 
