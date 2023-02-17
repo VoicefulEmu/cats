@@ -66,8 +66,6 @@ def about(topic):
             x_punc = remove_punctuation(x)
             x_lower = lower(x_punc)
             input_fixed.append(x_lower)
-            # print (input_fixed)
-            # input_fixed + x_split_list
         for x in topic:
             if x in input_fixed:
                 return True
@@ -104,55 +102,20 @@ def accuracy(typed, reference):
     counter = 0
     # BEGIN PROBLEM 3
     if len(typed_words) == 0 and len(reference_words) == 0:
-         counter = 1
-         return counter/1 *100
+         return 100.0
     elif len(typed_words) == 0 and len(reference_words) != 0 or len(typed_words) !=0 and len(reference_words) == 0:
-        counter = 0
-    if len(typed_words) > len(reference_words):
-        for x in range(len(reference_words)):
+        return 0.0
+    if len(typed_words) <= len(reference_words):
+        for x in range(len(typed_words)):
             if typed_words[x] == reference_words[x]:
                 counter +=1
         return counter/len(typed_words) *100
     else:
-        for x in range(len(typed_words)):
+        for x in range(len(reference_words)):
             if typed_words[x] == reference_words[x]:
                 counter +=1
-    return counter/len(reference_words) * 100
-
-    final_list = []
-
-
-
-
-
-    # for x in range(len(typed_words)):
-    #     if typed_words[x] == None or reference_words[x] == None:
-    #         return (counter/len(reference_words))* 100
-    #     if typed_words[x] == reference_words[x]:
-    #         counter += 1
-    # return (counter/len(reference_words))* 100
-    
-
-    # def helper(typedh, referenceh):
-    #     index = 0
-    #     if typedh == []:
-    #         return 0
-    #     elif len(typedh) != len(referenceh):
-    #         return 0 
-    #     elif len(typedh) == 0 and len(referenceh) == 0:
-    #         return 1
-    #     elif typedh[0] == referenceh[0]:
-    #         return 1 + accuracy(typedh[1:],referenceh[1:])
-    #     else:
-    #         return helper(typedh[1:],referenceh[1:])
-    
-    # final_answer = (helper(typed_words,reference_words))/len(typed)
-    # return final_answer
-
-
+        return counter/len(typed_words) *100
     # END PROBLEM 3
-
-# print(accuracy('Cute', 'Cute Dog.'))
 
 def wpm(typed, elapsed):
     """Return the words-per-minute (WPM) of the TYPED string.
