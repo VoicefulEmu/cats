@@ -161,9 +161,23 @@ def autocorrect(typed_word, valid_words, diff_function, limit):
     'testing'
     """
     # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
+    lowest_dif_location = None
+    lowest_dif_word = None
+    lowest_dif_len = 100
+    if typed_word in valid_words:
+        return typed_word
+    for i in valid_words:
+        current_dif = diff_function(typed_word,i,limit)
+        if current_dif < lowest_dif_len:
+            lowest_dif_location = valid_words.index(i)
+            lowest_dif_word = i
+            lowest_dif_len = current_dif
+    else:
+        if lowest_dif_len > limit:
+            return typed_word
+        else:
+            return lowest_dif_word
     # END PROBLEM 5
-
 
 def feline_flips(start, goal, limit):
     """A diff function for autocorrect that determines how many letters
@@ -188,7 +202,18 @@ def feline_flips(start, goal, limit):
     5
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    def helper_function(start,goal,limit,num_subs):
+        if num_subs > limit:
+            return limit + 1
+        if len(start) == 0 or len(goal) ==0:
+            return num_subs + (abs(len(goal)-len(start)))
+        else:
+            if start[0] == goal[0]:
+                return helper_function(start[1:],goal[1:],limit,num_subs)
+            else:
+                num_subs += 1
+                return helper_function(start[1:],goal[1:],limit,num_subs)
+    return helper_function(start,goal,limit,0)
     # END PROBLEM 6
 
 
