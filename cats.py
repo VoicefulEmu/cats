@@ -253,7 +253,7 @@ def minimum_mewtations(start, goal, limit):
         # END
 
     else:
-        add = ...  # Fill in these lines
+        add = minimum_mewtations(start,goal,limit)
         remove = ...
         substitute = ...
         # BEGIN
@@ -309,6 +309,26 @@ def report_progress(sofar, prompt, user_id, upload):
     return len_progress
     # END PROBLEM 8
 
+def match(words, times):
+    """A data abstraction containing all words typed and their times.
+
+    Arguments:
+        words: A list of strings, each string representing a word typed.
+        times: A list of lists for how long it took for each player to type
+            each word.
+            times[i][j] = time it took for player i to type words[j].
+
+    Example input:
+        words: ['Hello', 'world']
+        times: [[5, 1], [4, 2]]
+    """
+    assert all([type(w) == str for w in words]), 'words should be a list of strings'
+    assert all([type(t) == list for t in times]), 'times should be a list of lists'
+    assert all([isinstance(i, (int, float)) for t in times for i in t]), 'times lists should contain numbers'
+    assert all([len(t) == len(words) for t in times]), 'There should be one word per time.'
+    return [words, times]
+
+
 def time_per_word(words, times_per_player):
     """Given timing data, return a match data abstraction, which contains a
     list of words and the amount of time each player took to type each word.
@@ -327,7 +347,14 @@ def time_per_word(words, times_per_player):
     [[6, 3, 6, 2], [10, 6, 1, 2]]
     """
     # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
+
+    final_time_list = []
+    for x in times_per_player:
+        time_passed_list = []
+        for i in (range(len(x)-1)):
+            time_passed_list.append(x[i+1] - x[i])
+        final_time_list.append(time_passed_list)
+    return match(words,final_time_list)
     # END PROBLEM 9
 
 
@@ -351,26 +378,6 @@ def fastest_words(match):
     # BEGIN PROBLEM 10
     "*** YOUR CODE HERE ***"
     # END PROBLEM 10
-
-
-def match(words, times):
-    """A data abstraction containing all words typed and their times.
-
-    Arguments:
-        words: A list of strings, each string representing a word typed.
-        times: A list of lists for how long it took for each player to type
-            each word.
-            times[i][j] = time it took for player i to type words[j].
-
-    Example input:
-        words: ['Hello', 'world']
-        times: [[5, 1], [4, 2]]
-    """
-    assert all([type(w) == str for w in words]), 'words should be a list of strings'
-    assert all([type(t) == list for t in times]), 'times should be a list of lists'
-    assert all([isinstance(i, (int, float)) for t in times for i in t]), 'times lists should contain numbers'
-    assert all([len(t) == len(words) for t in times]), 'There should be one word per time.'
-    return [words, times]
 
 
 def word_at(match, word_index):
