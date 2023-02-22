@@ -97,8 +97,14 @@ def accuracy(typed, reference):
     >>> accuracy('', '')
     100.0
     """
-    typed_words = split(typed)
-    reference_words = split(reference)
+    if typed is list:
+        typed_words = typed
+    else:
+        typed_words = split(typed)
+    if reference is list:
+        reference_words = reference
+    else:
+        reference_words = split(reference)
     counter = 0
     # BEGIN PROBLEM 3
     if len(typed_words) == 0 and len(reference_words) == 0:
@@ -293,9 +299,15 @@ def report_progress(sofar, prompt, user_id, upload):
     0.2
     """
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    len_sofar = len(sofar)
+    for i in range(len(sofar)):
+        if sofar[i] != prompt[i] :
+            len_sofar -= len(sofar[i:])
+            break
+    len_progress = len_sofar / len(prompt)
+    upload({'id': user_id, 'progress': len_progress})
+    return len_progress
     # END PROBLEM 8
-
 
 def time_per_word(words, times_per_player):
     """Given timing data, return a match data abstraction, which contains a
