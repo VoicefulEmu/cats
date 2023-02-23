@@ -223,7 +223,7 @@ def feline_flips(start, goal, limit):
     # END PROBLEM 6
 
 
-def minimum_mewtations(start, goal, limit):
+def minimum_mewtations(start, goal, limit, num_subs = 0):
     """A diff function that computes the edit distance from START to GOAL.
     This function takes in a string START, a string GOAL, and a number LIMIT.
 
@@ -240,26 +240,17 @@ def minimum_mewtations(start, goal, limit):
     >>> minimum_mewtations("ckiteus", "kittens", big_limit) # ckiteus -> kiteus -> kitteus -> kittens
     3
     """
-    assert False, 'Remove this line'
-
-    if ______________:  # Fill in the condition
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
-    elif ___________:  # Feel free to remove or add additional cases
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
+    if num_subs > limit:
+        return limit + 1
+    elif len(start) == 0 or len(goal) ==0:
+        return num_subs + (abs(len(goal)-len(start)))
     else:
-        add = minimum_mewtations(start,goal,limit)
-        remove = ...
-        substitute = ...
-        # BEGIN
-        "*** YOUR CODE HERE ***"
+        if start[0] == goal[0]:
+            return minimum_mewtations(start[1:],goal[1:],limit,num_subs)
+        else:
+            num_subs +=1 
+            return min([minimum_mewtations(start,goal[1:],limit,num_subs),  minimum_mewtations(start[1:],goal,limit,num_subs) ,minimum_mewtations(start[1:],goal[1:],limit,num_subs)])
         # END
-
 
 def final_diff(start, goal, limit):
     """A diff function that takes in a string START, a string GOAL, and a number LIMIT.
@@ -358,6 +349,33 @@ def time_per_word(words, times_per_player):
     # END PROBLEM 9
 
 
+def get_times(match):
+    """A selector function for all typing times for all players"""
+    return match[1]
+
+
+def time(match, player_num, word_index):
+    """A selector function for the time it took player_num to type the word at word_index"""
+    assert word_index < len(match[0]), "word_index out of range of words"
+    assert player_num < len(match[1]), "player_num out of range of players"
+    return match[1][player_num][word_index]
+
+def get_words(match):
+    """A selector function for all the words in the match"""
+    return match[0]
+
+
+def word_at(match, word_index):
+    """A selector function that gets the word with index word_index"""
+    assert 0 <= word_index < len(match[0]), "word_index out of range of words"
+    return match[0][word_index]
+
+
+def match_string(match):
+    """A helper function that takes in a match object and returns a string representation of it"""
+    return "match(%s, %s)" % (match[0], match[1])
+
+
 def fastest_words(match):
     """Return a list of lists of which words each player typed fastest.
 
@@ -376,39 +394,26 @@ def fastest_words(match):
     player_indices = range(len(get_times(match)))  # contains an *index* for each player
     word_indices = range(len(get_words(match)))    # contains an *index* for each word
     # BEGIN PROBLEM 10
-    "*** YOUR CODE HERE ***"
+    result = []
+
+    for player_index in player_indices:
+        result.append([])
+
+    for word_index in word_indices:
+        fastest_time = 500
+        fastest_player_idx = 0
+
+        for player_index in player_indices:
+            cur_time = time(match,player_index, word_index)
+            if cur_time < fastest_time:
+                fastest_time = cur_time
+                fastest_player_idx = player_index
+        result[fastest_player_idx].append(word_at(match, word_index))
+
+    return result
     # END PROBLEM 10
 
-
-def word_at(match, word_index):
-    """A selector function that gets the word with index word_index"""
-    assert 0 <= word_index < len(match[0]), "word_index out of range of words"
-    return match[0][word_index]
-
-
-def get_words(match):
-    """A selector function for all the words in the match"""
-    return match[0]
-
-
-def get_times(match):
-    """A selector function for all typing times for all players"""
-    return match[1]
-
-
-def time(match, player_num, word_index):
-    """A selector function for the time it took player_num to type the word at word_index"""
-    assert word_index < len(match[0]), "word_index out of range of words"
-    assert player_num < len(match[1]), "player_num out of range of players"
-    return match[1][player_num][word_index]
-
-
-def match_string(match):
-    """A helper function that takes in a match object and returns a string representation of it"""
-    return "match(%s, %s)" % (match[0], match[1])
-
-
-enable_multiplayer = False  # Change to True when you're ready to race.
+enable_multiplayer = True  # Change to True when you're ready to race.
 
 ##########################
 # Command Line Interface #
